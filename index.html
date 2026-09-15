@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CondominumApp Support</title>
+  <title>CondominumApp — Manage your property community</title>
+  <meta name="description" content="CondominumApp by Innova Management. Pay bills, follow property info, vote, and stay in touch with your community.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,520;9..144,640&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,10 +18,13 @@
       --ink: #111927;
       --muted: #5f616b;
       --line: #dce6ef;
+      --gold: #f6b20d;
       --shadow: 0 28px 70px rgba(10, 122, 193, 0.12);
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
 
     html, body { min-height: 100%; }
 
@@ -31,14 +35,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    .page {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 48px 20px;
-      position: relative;
-      overflow: hidden;
-    }
+    a { color: inherit; }
 
     .glow {
       position: absolute;
@@ -57,7 +54,7 @@
       height: 480px;
       border-radius: 50%;
       background: radial-gradient(circle, rgba(246, 178, 13, 0.12), transparent 70%);
-      bottom: -180px;
+      bottom: -80px;
       left: -120px;
       pointer-events: none;
     }
@@ -69,7 +66,7 @@
       bottom: 0;
       height: 92px;
       pointer-events: none;
-      opacity: 0.18;
+      opacity: 0.14;
       background:
         linear-gradient(var(--blue), var(--blue)) 8% 100% / 42px 38px no-repeat,
         linear-gradient(var(--blue), var(--blue)) 14% 100% / 28px 58px no-repeat,
@@ -85,22 +82,33 @@
         linear-gradient(var(--blue), var(--blue)) 94% 100% / 24px 56px no-repeat;
     }
 
-    .card {
-      position: relative;
-      width: min(640px, 100%);
-      background: var(--white);
-      border: 1px solid rgba(17, 25, 39, 0.06);
-      border-radius: 32px;
-      box-shadow: var(--shadow);
-      padding: 48px 48px 40px;
-      z-index: 1;
+    .wrap {
+      width: min(1080px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(242, 247, 251, 0.88);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(220, 230, 239, 0.8);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      padding: 16px 0;
     }
 
     .brand {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 36px;
+      text-decoration: none;
     }
 
     .mark {
@@ -128,21 +136,206 @@
       font-weight: 500;
     }
 
-    h1 {
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+
+    .nav a {
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--muted);
+    }
+
+    .nav a:hover { color: var(--blue); }
+
+    .hero {
+      position: relative;
+      overflow: hidden;
+      padding: 72px 0 80px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 48px;
+      align-items: center;
+    }
+
+    h1, h2.section-title {
       font-family: Fraunces, Georgia, serif;
-      font-size: clamp(34px, 6vw, 48px);
       font-weight: 640;
       letter-spacing: -0.03em;
       line-height: 1.08;
-      margin-bottom: 14px;
+    }
+
+    h1 {
+      font-size: clamp(36px, 6vw, 58px);
+      margin-bottom: 16px;
     }
 
     .lede {
-      font-size: 17px;
-      line-height: 1.6;
+      font-size: 18px;
+      line-height: 1.65;
       color: var(--muted);
-      max-width: 38ch;
+      max-width: 42ch;
       margin-bottom: 32px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--blue);
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 13px 18px;
+      border-radius: 999px;
+      white-space: nowrap;
+      box-shadow: 0 10px 22px rgba(10, 122, 193, 0.28);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .cta:hover {
+      background: var(--blue-dark);
+      transform: translateY(-1px);
+    }
+
+    .cta-secondary {
+      background: var(--white);
+      color: var(--blue);
+      border: 1px solid var(--line);
+      box-shadow: none;
+    }
+
+    .cta-secondary:hover { background: var(--blue-soft); }
+
+    .phone-card {
+      background: var(--white);
+      border: 1px solid rgba(17, 25, 39, 0.06);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 28px;
+    }
+
+    .phone-screen {
+      background: linear-gradient(180deg, #0a7ac1 0%, #08649e 100%);
+      color: var(--white);
+      border-radius: 24px;
+      padding: 28px 22px;
+      min-height: 320px;
+    }
+
+    .phone-kicker {
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.8;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+
+    .phone-screen h3 {
+      font-family: Fraunces, Georgia, serif;
+      font-size: 28px;
+      font-weight: 640;
+      margin-bottom: 18px;
+    }
+
+    .phone-row {
+      background: rgba(255, 255, 255, 0.16);
+      border-radius: 14px;
+      padding: 14px 16px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .section {
+      padding: 24px 0 80px;
+    }
+
+    .section-title {
+      font-size: clamp(28px, 4vw, 40px);
+      margin-bottom: 12px;
+    }
+
+    .section-copy {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 46ch;
+      margin-bottom: 28px;
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .topic, .feature {
+      background: var(--blue-soft);
+      border-radius: 16px;
+      padding: 16px 14px;
+    }
+
+    .feature {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 22px 20px;
+    }
+
+    .topic-icon, .feature-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 10px;
+      background: var(--white);
+      display: grid;
+      place-items: center;
+      margin-bottom: 12px;
+    }
+
+    .feature-icon { background: var(--blue-soft); }
+
+    .feature h3, .topic h2 {
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .feature p, .topic p {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+
+    .support-section {
+      position: relative;
+      padding-bottom: 100px;
+      overflow: hidden;
+    }
+
+    .card {
+      position: relative;
+      width: min(640px, 100%);
+      margin: 0 auto;
+      background: var(--white);
+      border: 1px solid rgba(17, 25, 39, 0.06);
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      padding: 48px 48px 40px;
+      z-index: 1;
     }
 
     .contacts {
@@ -178,71 +371,11 @@
       word-break: break-all;
     }
 
-    .cta {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: var(--blue);
-      color: var(--white);
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 13px 18px;
-      border-radius: 999px;
-      white-space: nowrap;
-      box-shadow: 0 10px 22px rgba(10, 122, 193, 0.28);
-      transition: background 0.2s ease, transform 0.2s ease;
-    }
-
-    .cta:hover {
-      background: var(--blue-dark);
-      transform: translateY(-1px);
-    }
-
-    .cta-secondary {
-      background: var(--white);
-      color: var(--blue);
-      border: 1px solid var(--line);
-      box-shadow: none;
-    }
-
-    .cta-secondary:hover {
-      background: var(--blue-soft);
-    }
-
     .topics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 12px;
       margin-bottom: 28px;
-    }
-
-    .topic {
-      background: var(--blue-soft);
-      border-radius: 16px;
-      padding: 16px 14px;
-    }
-
-    .topic-icon {
-      width: 32px;
-      height: 32px;
-      border-radius: 10px;
-      background: var(--white);
-      display: grid;
-      place-items: center;
-      margin-bottom: 12px;
-    }
-
-    .topic h2 {
-      font-size: 14px;
-      font-weight: 700;
-      margin-bottom: 4px;
-    }
-
-    .topic p {
-      font-size: 12px;
-      line-height: 1.45;
-      color: var(--muted);
     }
 
     .note {
@@ -251,6 +384,31 @@
       color: var(--muted);
       border-top: 1px solid var(--line);
       padding-top: 22px;
+    }
+
+    .site-footer {
+      border-top: 1px solid var(--line);
+      padding: 22px 0 32px;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
+    .site-footer a {
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    @media (max-width: 860px) {
+      .hero-grid, .features { grid-template-columns: 1fr; }
+      .nav { display: none; }
     }
 
     @media (max-width: 640px) {
@@ -262,88 +420,184 @@
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="glow"></div>
-    <div class="glow-2"></div>
-    <div class="skyline" aria-hidden="true"></div>
-
-    <main class="card">
-      <div class="brand">
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="index.html">
         <div class="mark" aria-hidden="true">
           <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
             <path d="M4 19V9.2L11 4l7 5.2V19H13.2V13.4H8.8V19H4Z" fill="white"/>
           </svg>
         </div>
         <div>
-          <div class="brand-name">CondominumApp</div>
-          <div class="brand-sub">Property community support</div>
+          <div class="brand-name">Innova Management</div>
         </div>
-      </div>
+      </a>
+      <nav class="nav">
+        <a href="#features">Features</a>
+        <a href="#support">Support</a>
+        <a href="support.html">Help center</a>
+      </nav>
+    </div>
+  </header>
 
-      <h1>How can we help?</h1>
-      <p class="lede">If you need help with CondominumApp, call or email us. We usually reply within one business day.</p>
-
-      <div class="contacts">
-        <div class="contact-card">
-          <div>
-            <div class="contact-label">Phone</div>
-            <div class="contact-value">044 911933</div>
-          </div>
-          <a class="cta" href="tel:+37444911933">
-            Call us
+  <section class="hero">
+    <div class="glow"></div>
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Your property community, in one app.</h1>
+        <p class="lede">Pay bills, follow your balance, send requests, vote, and stay informed about building news — all from Innova Management App.</p>
+        <div class="hero-actions">
+          <a class="cta" href="#support">
+            Get support
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M5.2 2.8c.4-.4 1-.4 1.4 0l1.2 1.2c.4.4.4 1 0 1.4L6.6 6.6c.8 1.6 2.2 3 3.8 3.8l1.2-1.2c.4-.4 1-.4 1.4 0l1.2 1.2c.4.4.4 1 0 1.4l-.8.8c-.5.5-1.2.7-1.9.5C8.7 12.4 3.6 7.3 2.9 4.5c-.2-.7 0-1.4.5-1.9l.8-.8Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+              <path d="M3 8h10M9 4l4 4-4 4" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
           </a>
-        </div>
-        <div class="contact-card">
-          <div>
-            <div class="contact-label">Email</div>
-            <div class="contact-value">info@innovapm.am</div>
-          </div>
-          <a class="cta cta-secondary" href="mailto:info@innovapm.am">
-            Write to us
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="#0A7AC1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
+          <a class="cta cta-secondary" href="mailto:info@innovapm.am">Write to us</a>
         </div>
       </div>
+      <div class="phone-card">
+        <div class="phone-screen">
+          <div class="phone-kicker">Innova Management</div>
+          <h3>Easy response for every problem</h3>
+          <div class="phone-row">Payments &amp; history</div>
+          <div class="phone-row">Applications &amp; votes</div>
+          <div class="phone-row">Notifications &amp; property info</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      <div class="topics">
-        <article class="topic">
-          <div class="topic-icon">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
-              <circle cx="8" cy="5.2" r="2.4" stroke="#0A7AC1" stroke-width="1.6"/>
-              <path d="M3.2 13c.7-2.2 2.4-3.3 4.8-3.3s4.1 1.1 4.8 3.3" stroke="#0A7AC1" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h2>Account access</h2>
-          <p>Sign-in, phone number, and profile issues.</p>
-        </article>
-        <article class="topic">
-          <div class="topic-icon">
+  <section class="section" id="features">
+    <div class="wrap">
+      <h2 class="section-title">Built for residents</h2>
+      <p class="section-copy">Everything you need to manage your apartment, parking, and community payments in one place.</p>
+      <div class="features">
+        <article class="feature">
+          <div class="feature-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <rect x="2.2" y="4" width="11.6" height="8.4" rx="1.6" stroke="#0A7AC1" stroke-width="1.6"/>
               <path d="M2.2 7h11.6" stroke="#0A7AC1" stroke-width="1.6"/>
             </svg>
           </div>
-          <h2>Payments</h2>
-          <p>Bills, cards, and payment history.</p>
+          <h3>Fast payments</h3>
+          <p>Pay debts in one tap, save a card, and turn on regular payments.</p>
         </article>
-        <article class="topic">
-          <div class="topic-icon">
+        <article class="feature">
+          <div class="feature-icon">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
               <path d="M3 13V7.2L8 3.5l5 3.7V13H9.4V9.4H6.6V13H3Z" stroke="#0A7AC1" stroke-width="1.6" stroke-linejoin="round"/>
             </svg>
           </div>
-          <h2>Property info</h2>
-          <p>Units, notices, and community details.</p>
+          <h3>Property in one place</h3>
+          <p>See apartments, parking, balances, and upcoming payments together.</p>
+        </article>
+        <article class="feature">
+          <div class="feature-icon">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+              <circle cx="8" cy="5.2" r="2.4" stroke="#0A7AC1" stroke-width="1.6"/>
+              <path d="M3.2 13c.7-2.2 2.4-3.3 4.8-3.3s4.1 1.1 4.8 3.3" stroke="#0A7AC1" stroke-width="1.6" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h3>Stay informed</h3>
+          <p>Get notices about repairs, meetings, votes, and new reports.</p>
         </article>
       </div>
+    </div>
+  </section>
 
-      <p class="note">We will help you with account access, payments, property information, and other app-related questions.</p>
-    </main>
-  </div>
+  <section class="support-section" id="support">
+    <div class="glow-2"></div>
+    <div class="skyline" aria-hidden="true"></div>
+    <div class="wrap">
+      <main class="card">
+        <div class="brand" style="margin-bottom: 28px;">
+          <div class="mark" aria-hidden="true">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M4 19V9.2L11 4l7 5.2V19H13.2V13.4H8.8V19H4Z" fill="white"/>
+            </svg>
+          </div>
+          <div>
+            <div class="brand-name">Property community support</div>
+          </div>
+        </div>
+
+        <h2 class="section-title">How can we help?</h2>
+        <p class="lede">If you need help with App, call or email us. We usually reply within one business day.</p>
+
+        <div class="contacts">
+          <div class="contact-card">
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-value">044 911933</div>
+            </div>
+            <a class="cta" href="tel:+37444911933">
+              Call us
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M5.2 2.8c.4-.4 1-.4 1.4 0l1.2 1.2c.4.4.4 1 0 1.4L6.6 6.6c.8 1.6 2.2 3 3.8 3.8l1.2-1.2c.4-.4 1-.4 1.4 0l1.2 1.2c.4.4.4 1 0 1.4l-.8.8c-.5.5-1.2.7-1.9.5C8.7 12.4 3.6 7.3 2.9 4.5c-.2-.7 0-1.4.5-1.9l.8-.8Z" stroke="white" stroke-width="1.5" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+          <div class="contact-card">
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">info@innovapm.am</div>
+            </div>
+            <a class="cta cta-secondary" href="mailto:info@innovapm.am">
+              Write to us
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 8h10M9 4l4 4-4 4" stroke="#0A7AC1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="topics">
+          <article class="topic">
+            <div class="topic-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <circle cx="8" cy="5.2" r="2.4" stroke="#0A7AC1" stroke-width="1.6"/>
+                <path d="M3.2 13c.7-2.2 2.4-3.3 4.8-3.3s4.1 1.1 4.8 3.3" stroke="#0A7AC1" stroke-width="1.6" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <h2>Account access</h2>
+            <p>Sign-in, phone number, and profile issues.</p>
+          </article>
+          <article class="topic">
+            <div class="topic-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <rect x="2.2" y="4" width="11.6" height="8.4" rx="1.6" stroke="#0A7AC1" stroke-width="1.6"/>
+                <path d="M2.2 7h11.6" stroke="#0A7AC1" stroke-width="1.6"/>
+              </svg>
+            </div>
+            <h2>Payments</h2>
+            <p>Bills, cards, and payment history.</p>
+          </article>
+          <article class="topic">
+            <div class="topic-icon">
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+                <path d="M3 13V7.2L8 3.5l5 3.7V13H9.4V9.4H6.6V13H3Z" stroke="#0A7AC1" stroke-width="1.6" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h2>Property info</h2>
+            <p>Units, notices, and community details.</p>
+          </article>
+        </div>
+
+        <p class="note">We will help you with account access, payments, property information, and other app-related questions. You can also open the full <a href="support.html" style="color:#0a7ac1;font-weight:700;text-decoration:none;">support page</a>.</p>
+      </main>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <span>© Innova Management</span>
+      <span>
+        <a href="support.html">Support</a>
+        ·
+        <a href="mailto:info@innovapm.am">info@innovapm.am</a>
+      </span>
+    </div>
+  </footer>
 </body>
 </html>
